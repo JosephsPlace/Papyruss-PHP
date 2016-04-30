@@ -1,0 +1,8 @@
+{
+   "autoload":{
+      "psr-4":{
+         "papyruss\\core\\": "./core",
+         "app\\controllers\\": "./controllers"
+      }
+   }
+}

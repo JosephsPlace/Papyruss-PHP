@@ -1,0 +1,1 @@
+<h1>If you're reading this you don't suck.</h1>
