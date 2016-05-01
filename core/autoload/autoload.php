@@ -1,108 +1,53 @@
 <?php
-//   class Autoload {
-//      private $autoloadable = [];
-//      
-//      public function register($name, $loader = false) {
-//         try {
-//            if (is_callable($loader) || $loader == false) {
-//               $this->autoloadable[$name] = $loader;
-//               return;
-//            } else {
-//               throw new Exception('Invalid loader');
-//            }
-//         } catch (Exception $e) {
-//            echo 'ERROR: ' . $e->getMessage();
-//         }
-//      }
-//      
-//      public function load($name) {
-//         try {
-//            $name = strtolower($name);
-//            $path = BASEPATH . '/core/' . $name . '/' . $name . '.php';
-//
-//            if (!empty($this->autoloadable[$name])) {
-//               return $this->autoloadable[$name]($name);
-//            }
-//            if (file_exists($path)) {
-//               return require($path);
-//            }
-//               throw new Exception($name.' is not loaded or registred for autoloading');
-//         } catch(Exception $e) {
-//            echo 'ERROR: ' . $e->getMessage();
-//         }
-//      }
-//   }
+   /*
+   *  Loads all classes based. New function is required for each new filename
+   *  structure.
+   */
+   class Autoload {
 
-class Autoload {
-   static public function loadViews($className) {
-      $filename = BASEPATH . '/core/view/' . $className . '.php';
-      //echo $filename.'<br>';
-      if (file_exists($filename)) {
-         require($filename);
-         if (class_exists($className)) {
-            return true;
+      /*
+      *  Main load function, holds logic for requiring the classes
+      *
+      *  @params: $filename - name of the class's file
+      *           $class_name - name of the class inside the file
+      */
+      static public function load($filename, $class_name) {
+         if (file_exists($filename)) {
+            require($filename);
+            if (class_exists($class_name)) {
+               return true;
+            }
          }
+         return false;
       }
-      return false;
-   }
-   
-   static public function loadRoutes($className) {
-      $filename = BASEPATH . '/core/router/' . $className . '.php';
-      //echo $filename.'<br>';
-      if (file_exists($filename)) {
-         require($filename);
-         if (class_exists($className)) {
-            return true;
-         }
+
+      /*
+      *  The functions that define the different folders for classes
+      *
+      *  @params: $class_name - name of the class to be autoloaded
+      */
+      public static function loadViews($class_name) {
+         $filename = BASEPATH . '/core/view/' . $class_name . '.php';
+         self::load($filename, $class_name);
       }
-      return false;
-   }
-   
-   static public function loadControllers($className) {
-      $filename = BASEPATH . '/controllers/' . $className . '.php';
-      //echo $filename.'<br>';
-      if (file_exists($filename)) {
-         require($filename);
-         if (class_exists($className)) {
-            return true;
-         }
+
+      public static function loadRoutes($class_name) {
+         $filename = BASEPATH . '/core/router/' . $class_name . '.php';
+         self::load($filename, $class_name);
       }
-      return false;
-   }
-   
-   static public function loadModels($className) {
-      $filename = BASEPATH . '/models/' . $className . '.php';
-      //echo $filename.'<br>';
-      if (file_exists($filename)) {
-         require($filename);
-         if (class_exists($className)) {
-            return true;
-         }
+
+      public static function loadControllers($class_name) {
+         $filename = BASEPATH . '/controllers/' . $class_name . '.php';
+         self::load($filename, $class_name);
       }
-      return false;
-   }
-   
-   static public function loadDatabases($className) {
-      $filename = BASEPATH . '/database/' . $className . '.php';
-      //echo $filename.'<br>';
-      if (file_exists($filename)) {
-         require($filename);
-         if (class_exists($className)) {
-            return true;
-         }
+
+      public static function loadModels($class_name) {
+         $filename = BASEPATH . '/models/' . $class_name . '.php';
+         self::load($filename, $class_name);
       }
-      return false;
+
+      public static function loadDatabases($class_name) {
+         $filename = BASEPATH . '/database/' . $class_name . '.php';
+         self::load($filename, $class_name);
+      }
    }
-   
-//   static public function loadCore($className) {
-//      $filename = BASEPATH . '/core/' . $className . '/' . $className . '.php';
-//      //echo $filename;
-//      if (file_exists($filename)) {
-//         require($filename);
-//         if (class_exists($className)) {
-//            return true;
-//         }
-//      }
-//      return false;
-//   }
-}
