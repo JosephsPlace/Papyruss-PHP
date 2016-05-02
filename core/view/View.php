@@ -21,9 +21,18 @@
       *           $variables - variables that need to be parsed, defaulted to empty
       */
       public function show($view_name, $variables=[]){
-         echo $this->engine->parse($this->view_loader->load($view_name),
-                                   $variables
-                                  );
+         $contents = $this->engine->parse($this->view_loader->load($view_name),
+                                  $variables
+                                 );
+         echo $contents;
+         //$path = BASEPATH . '/views/' . $view_name;
+         //$file = file_get_contents($path);
+         //$file = $this->engine->parse($this->view_loader->load($view_name),
+         //                         $variables
+         //                        );
+         //file_put_contents($path, $file);
+         //dd($variables);
+         //include BASEPATH . '/views/' . $view_name;
       }
 
       /*

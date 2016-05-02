@@ -32,7 +32,8 @@
       public function replaceVars(&$view, $variables) {
          $view = preg_replace_callback('/({)({)((?:[a-zA-Z]*))(})(})/',
             function($match) use ($variables){
-               return $variables[$match[3]];
+               if(!empty($variables[$match[3]]))
+                  return $variables[$match[3]];
             }, $view);
       }
 

@@ -8,7 +8,7 @@
       public function registerPost() {
          $user = new User();
 
-         $errors = [];
+         $params = [];
          $username = $_POST['username'];
          $password = $_POST['password'];
          $confirm_password = $_POST['confirm_password'];
@@ -16,13 +16,40 @@
          if(!$user->nameExists($username)) {
             if ($password === $confirm_password) {
                $user->register($username, $password);
-               $this->view->redirect('../../');
+               $this->view->redirect('../../../public/');
             } else {
-               array_push($errors, 'Passwords did not match');
+               $params['error'] = 'Passwords did not match.';
             }
          } else {
-            array_push($errors, 'Username already exists');
+            $params['error'] = 'Username already exists.';
          }
+         if ($params) {
+            $this->view->show('registerFormPost.php', $params);
+         }
+      }
 
+      public function loginForm() {
+         $this->view->show('loginForm.php');
+      }
+
+      public function loginPost() {
+         $user = new User();
+
+         $username = $_POST['username'];
+         $password = $_POST['password'];
+
+         if (!$user->login($username, $password)) {
+            $params['error'] = 'Username and password did not match';
+            $this->view->show('loginFormPost.php', $params);
+         } else {
+            $this->view->redirect('../../../public/about/');
+         }
+      }
+
+      public function logout() {
+         $user = new User();
+
+         $user->logout();
+         $this->view->redirect('../../public/');
       }
    }

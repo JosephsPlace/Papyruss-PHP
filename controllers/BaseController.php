@@ -5,6 +5,11 @@
          $helpers = [
             'sum' => function($x, $y) {
                return $x + $y;
+            },
+            'array' => function($x) {
+               $str = implode(",", $x);
+
+               return $x;
             }
          ];
 
